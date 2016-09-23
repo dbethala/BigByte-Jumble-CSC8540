@@ -14,7 +14,7 @@
 <AnchorPane prefHeight="421.0" prefWidth="608.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
       <HBox alignment="CENTER" layoutX="240.0" layoutY="188.0" spacing="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-      <GridPane layoutX="369.0" layoutY="49.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="30.0">
+      <GridPane layoutX="38.0" layoutY="30.0" AnchorPane.leftAnchor="38.0" AnchorPane.topAnchor="30.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
