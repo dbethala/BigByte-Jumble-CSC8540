@@ -1,9 +1,19 @@
 package application;
 
+import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javax.swing.Timer;
+
 import javafx.scene.control.*;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Date;
+import java.util.TimerTask;
+import java.util.*;
 public class Controller {
 	
 
@@ -19,6 +29,7 @@ public class Controller {
 	@FXML private Label label4;
 
 	@FXML private TextField field;
+	@FXML private Text timerField;
 	public void setMain(Main main){
 	this.main=main; // now the main class is connected with the controller now i can call any method form the main	
 	}
@@ -46,8 +57,28 @@ public class Controller {
 		label2.setText(wordsstack_Advanced_NotArranged[1]);
 		label3.setText(wordsstack_Advanced_NotArranged[2]);
 		label4.setText(wordsstack_Advanced_NotArranged[3]);
-
+		setTimer();
 		field.clear();
 		
 	}
+	private void setTimer() {
+		new AnimationTimer(){
+			private long startTime;
+			
+			@Override
+			public void start() {
+				startTime = System.currentTimeMillis();
+				super.start();
+			}
+			
+			@Override
+			public void handle(long timestamp) {
+				// TODO Auto-generated method stub
+				long now = System.currentTimeMillis();
+				Long difference = (now-startTime)/1000;
+				timerField.setText(difference.toString() + "s");
+			}
+		}.start();
+	}
 }
+
