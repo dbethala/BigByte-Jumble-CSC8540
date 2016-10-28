@@ -61,22 +61,29 @@ public class Controller {
 		field.clear();
 		
 	}
+	
+	//Method to set timer. Implements AnimationTimer to spawn new thread to update UI
 	private void setTimer() {
 		new AnimationTimer(){
-			private long startTime;
+			private long startTime; //Variable to hold system time
 			
 			@Override
 			public void start() {
-				startTime = System.currentTimeMillis();
-				super.start();
+				startTime = System.currentTimeMillis();	//Sets system time in milliseconds
+				super.start();	//Starts the thread
+			}
+			
+			@Override
+			public void stop(){
+				super.stop();
 			}
 			
 			@Override
 			public void handle(long timestamp) {
 				// TODO Auto-generated method stub
-				long now = System.currentTimeMillis();
-				Long difference = (now-startTime)/1000;
-				timerField.setText(difference.toString() + "s");
+				long now = System.currentTimeMillis();	//Gets current time after thread has started
+				Long difference = (now-startTime)/1000;	//1000 milliseconds in one second
+				timerField.setText(difference.toString() + "s");	//Appends the "s" and prints time
 			}
 		}.start();
 	}
