@@ -6,7 +6,13 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 
 
@@ -25,12 +31,14 @@ public class Main extends Application {
 	}
 	
 	public void mainWindow(){
-	
+		primaryStage.setTitle("Jumble Game"); // added a title to the stage.
+		
 	try {
 		//primstage is the window itself but the scene is the content 
 		FXMLLoader loader = new FXMLLoader(Main.class.getResource("sample.fxml")); // if it did not work put/
 		
 		AnchorPane pane = loader.load();
+		//pane.setStyle("-fx-background-color: red");
 		Controller controllerobj = loader.getController();
 		controllerobj.setMain(this); // now whenever te main start it also call th method setMain from the controller class
 		Scene scene = new Scene(pane); // scene take the pane as argument bcause pane load all the elements like buttons.etc
