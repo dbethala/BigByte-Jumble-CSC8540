@@ -157,7 +157,7 @@ public class Controller {
 		picture1.setVisible(false);
 		picture2.setVisible(false);
 		picture3.setVisible(false);
-		timerFlag = false;
+		System.out.println(tf1.getCharacters().toString());
 		timer.stop();
 		for(GridPane x : grid){ //adding all the text field elements of each grid to textfield arraylist so I can clear them at once
 			for (Node node : x.getChildren()) {
