@@ -1,9 +1,13 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+.initial {
+  -fx-control-inner-background: white;
+}
+
 .custom {
   -fx-control-inner-background: orange;
 }
 .anchor {
-    -fx-background-image:url('file:/C:/Users/n1000/workspace/Newx/background1.jpg');
+  -fx-background-image:url('file:/C:/Users/n1000/workspace/Newx/background1.jpg');
 }
 
 .custom1{
