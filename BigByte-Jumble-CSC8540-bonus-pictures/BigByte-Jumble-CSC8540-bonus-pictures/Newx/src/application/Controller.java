@@ -76,6 +76,7 @@ public class Controller {
 	@FXML private Label difflabel, labelw1, labelw2, labelw3,labelw4, labelw5;
 	private List<GridPane> grid = new ArrayList<GridPane>();
 	int Hintcounter; // to keep track of the number of hints
+    private boolean timerFlag = false;
     
 	public void setMain(Main main){
 	this.main=main; // now the main class is connected with the controller now i can call any method form the main.
@@ -142,6 +143,7 @@ public class Controller {
 		button1.setDisable(false); // enabling the start
 		button2.setDisable(true); // disabling the hint button
 		Hintcounter=0; // So I work with hint button counter again
+		
 	
 		grid.add(gp1); grid.add(gp2);grid.add(gp3); grid.add(gp4);grid.add(gp5); // adding all the gridpanes to the gridArrayList 
 		easyRadioButton.setSelected(false);
@@ -155,6 +157,7 @@ public class Controller {
 		picture1.setVisible(false);
 		picture2.setVisible(false);
 		picture3.setVisible(false);
+		timer.stop();
 		for(GridPane x : grid){ //adding all the text field elements of each grid to textfield arraylist so I can clear them at once
 			for (Node node : x.getChildren()) {
 			    System.out.println("Id: " + node.getId());
@@ -214,42 +217,33 @@ public class Controller {
 		label3.setVisible(true);
 		label4.setVisible(true);
 		/////////////////// END OF PICTURE HANDLING/////////////////////
-		
-			setTimer();
+			timer.start();
 		
 		
 	}
 	//Method to set timer. Implements AnimationTimer to spawn new thread to update UI
-	private void setTimer() {
-	
-	
-			new AnimationTimer(){
-				private long startTime; //Variable to hold system time
-				
-				@Override
-				public void start() {
-					startTime = System.currentTimeMillis();	//Sets system time in milliseconds
-					super.start();	//Starts the thread
-				}
-				
-				@Override
-				public void stop(){
-					super.stop();
-				}
-				
-				@Override
-				public void handle(long timestamp) {
-					// TODO Auto-generated method stub
-					long now = System.currentTimeMillis();	//Gets current time after thread has started
-					Long difference = (now-startTime)/1000;	//1000 milliseconds in one second
-					timerField.setText(difference.toString() + "s");	//Appends the "s" and prints time in seconds
-				}
-			}.start();
-				
-		}
-
+	AnimationTimer timer = new AnimationTimer() {
+		private long startTime; //Variable to hold system time
 		
-	}
-	
+		@Override
+		public void start() {
+			startTime = System.currentTimeMillis();	//Sets system time in milliseconds
+				super.start();	//Starts the thread
+		}
+		
+		@Override
+		public void stop(){
+			super.stop();
+		}
+		
+		@Override
+		public void handle(long timestamp) {
+			// TODO Auto-generated method stub
+			long now = System.currentTimeMillis();	//Gets current time after thread has started
+			Long difference = (now-startTime)/1000;	//1000 milliseconds in one second
+			timerField.setText(difference.toString() + "s");	//Appends the "s" and prints time in seconds
+		}
+	};
+}
 
 
