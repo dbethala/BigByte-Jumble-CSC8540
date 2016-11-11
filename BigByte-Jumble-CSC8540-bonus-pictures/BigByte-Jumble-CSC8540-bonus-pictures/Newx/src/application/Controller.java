@@ -80,7 +80,28 @@ public class Controller {
 	public void setMain(Main main){
 	this.main=main; // now the main class is connected with the controller now i can call any method form the main.
 
-	//tf1.getStyleClass().add("custom"); HIGHLIGHTS WOWWWWWWW
+	if (easyRadioButton.isSelected() == true) 
+	{
+	    tf1.getStyleClass().add("custom");
+	    tf7.getStyleClass().add("custom");
+	    tf8.getStyleClass().add("custom");
+	}
+	else if (mediumRadioButton.isSelected() == true) 
+	{
+	    tf1.getStyleClass().add("custom");
+	    tf4.getStyleClass().add("custom");
+	    tf9.getStyleClass().add("custom");
+	    tf13.getStyleClass().add("custom");
+	}
+	else if (hardRadioButton.isSelected() == true) 
+	{
+	    tf1.getStyleClass().add("custom");
+	    tf4.getStyleClass().add("custom");
+	    tf10.getStyleClass().add("custom");
+	    tf15.getStyleClass().add("custom");
+	    tf20.getStyleClass().add("custom");
+	    tf22.getStyleClass().add("custom");
+	}
 	easyRadioButton.getStyleClass().add("custom1");
 	mediumRadioButton.getStyleClass().add("custom1");
 	hardRadioButton.getStyleClass().add("custom1");
