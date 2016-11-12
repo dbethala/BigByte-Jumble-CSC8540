@@ -182,7 +182,20 @@ public class Controller {
 		picture1.setVisible(false);
 		picture2.setVisible(false);
 		picture3.setVisible(false);
-		for(GridPane x : grid){ //adding all the text field elements of each grid to textfield arraylist so I can clear them at once
+		
+		
+		TextField[] tfArray = { tf1, tf2, tf3, tf4, tf5, tf6,
+		                        tf7, tf8, tf9, tf10, tf11, tf12,
+		                        tf13, tf14, tf15, tf16, tf17, tf18,
+		                        tf19, tf20, tf21, tf22, tf23, tf24,
+		                        tf25, tf26, tf27, tf28, tf29, tf30};
+		for (TextField tf : tfArray) 
+		{
+		    tf.setText("");
+		}
+		
+		// This section changes the textfield ordering and causes a bug for the background coloring
+		/*for(GridPane x : grid){ //adding all the text field elements of each grid to textfield arraylist so I can clear them at once
 			for (Node node : x.getChildren()) {
 			    System.out.println("Id: " + node.getId());
 			    if (node instanceof TextField) {
@@ -190,7 +203,7 @@ public class Controller {
 			        ((TextField)node).setText("");
 			    }
 			}
-		}
+		}*/
 	
 	}
 	
