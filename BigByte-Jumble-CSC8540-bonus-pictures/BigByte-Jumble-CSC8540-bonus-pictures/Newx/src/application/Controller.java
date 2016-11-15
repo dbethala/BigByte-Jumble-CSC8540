@@ -83,7 +83,7 @@ public class Controller {
 	public void setMain(Main main){
 	this.main=main; // now the main class is connected with the controller now i can call any method form the main.
 
-	//tf1.getStyleClass().add("custom"); HIGHLIGHTS WOWWWWWWW
+	
 	easyRadioButton.getStyleClass().add("custom1");
 	mediumRadioButton.getStyleClass().add("custom1");
 	hardRadioButton.getStyleClass().add("custom1");
@@ -148,8 +148,35 @@ public class Controller {
 		button1.setDisable(false); // enabling the start
 		button2.setDisable(true); // disabling the hint button
 		Hintcounter=0; // So I work with hint button counter again
-	
+		
+		if (easyRadioButton.isSelected() == true) 
+                {
+                    tf1.getStyleClass().add("initial");
+                    tf7.getStyleClass().add("initial");
+                    tf8.getStyleClass().add("initial");
+                }
+                else if (mediumRadioButton.isSelected() == true) 
+                {
+                    tf1.getStyleClass().add("initial");
+                    tf4.getStyleClass().add("initial");
+                    tf9.getStyleClass().add("initial");
+                    tf13.getStyleClass().add("initial");
+                }
+                else if (hardRadioButton.isSelected() == true) 
+                {
+                    tf1.getStyleClass().add("initial");
+                    tf4.getStyleClass().add("initial");
+                    tf10.getStyleClass().add("initial");
+                    tf15.getStyleClass().add("initial");
+                    tf20.getStyleClass().add("initial");
+                    tf22.getStyleClass().add("initial");
+                }
+		
 		grid.add(gp1); grid.add(gp2);grid.add(gp3); grid.add(gp4);grid.add(gp5); // adding all the gridpanes to the gridArrayList 
+		
+		// This has to be before setting the radio button selection to falsae
+		
+		
 		easyRadioButton.setSelected(false);
 		mediumRadioButton.setSelected(false);
 		hardRadioButton.setSelected(false);
@@ -161,7 +188,20 @@ public class Controller {
 		picture1.setVisible(false);
 		picture2.setVisible(false);
 		picture3.setVisible(false);
-		for(GridPane x : grid){ //adding all the text field elements of each grid to textfield arraylist so I can clear them at once
+		
+		
+		TextField[] tfArray = { tf1, tf2, tf3, tf4, tf5, tf6,
+		                        tf7, tf8, tf9, tf10, tf11, tf12,
+		                        tf13, tf14, tf15, tf16, tf17, tf18,
+		                        tf19, tf20, tf21, tf22, tf23, tf24,
+		                        tf25, tf26, tf27, tf28, tf29, tf30};
+		for (TextField tf : tfArray) 
+		{
+		    tf.setText("");
+		}
+		
+		// This section changes the textfield ordering and causes a bug for the background coloring
+		/*for(GridPane x : grid){ //adding all the text field elements of each grid to textfield arraylist so I can clear them at once
 			for (Node node : x.getChildren()) {
 			    System.out.println("Id: " + node.getId());
 			    if (node instanceof TextField) {
@@ -169,7 +209,7 @@ public class Controller {
 			        ((TextField)node).setText("");
 			    }
 			}
-		}
+		}*/
 	
 	}
 	
@@ -189,6 +229,51 @@ public class Controller {
 		button2.setDisable(false); // enabling the hint button again
 		button1.setDisable(true); // disabling the start button
 		end.setDisable(false);
+		
+		if (easyRadioButton.isSelected() == true) 
+	        {
+	            //System.out.println(easyRadioButton.isSelected());
+		    tf1.getStyleClass().remove("initial");
+		    tf7.getStyleClass().remove("initial");
+		    tf8.getStyleClass().remove("initial");
+		    tf1.getStyleClass().add("custom");
+	            tf7.getStyleClass().add("custom");
+	            tf8.getStyleClass().add("custom");
+	            //System.out.println("End Easy");
+	        }
+	        else if (mediumRadioButton.isSelected() == true) 
+	        {
+	            //System.out.println(mediumRadioButton.isSelected());
+	            tf1.getStyleClass().remove("initial");
+	            tf4.getStyleClass().remove("initial");
+                    tf9.getStyleClass().remove("initial");
+                    tf13.getStyleClass().remove("initial");
+
+	            tf1.getStyleClass().add("custom");
+	            tf4.getStyleClass().add("custom");
+	            tf9.getStyleClass().add("custom");
+	            tf13.getStyleClass().add("custom");
+	            //System.out.println("End Medium");
+	        }
+	        else if (hardRadioButton.isSelected() == true) 
+	        {
+	            //System.out.println(hardRadioButton.isSelected());
+	            tf1.getStyleClass().remove("initial");
+	            tf4.getStyleClass().remove("initial");
+	            tf10.getStyleClass().remove("initial");
+	            tf15.getStyleClass().remove("initial");
+	            tf20.getStyleClass().remove("initial");
+	            tf22.getStyleClass().remove("initial");
+	            
+	            tf1.getStyleClass().add("custom");
+	            tf4.getStyleClass().add("custom");
+	            tf10.getStyleClass().add("custom");
+	            tf15.getStyleClass().add("custom");
+	            tf20.getStyleClass().add("custom");
+	            tf22.getStyleClass().add("custom");
+	            //System.out.println("End Hard");
+	        }
+		
 		Words word = new Words();
 		
 		//Generate Word set
