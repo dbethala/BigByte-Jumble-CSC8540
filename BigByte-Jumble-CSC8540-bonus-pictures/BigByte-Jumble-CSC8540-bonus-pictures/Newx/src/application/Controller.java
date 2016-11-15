@@ -216,25 +216,46 @@ public class Controller {
 		
 		if (easyRadioButton.isSelected() == true) 
 	        {
-	            tf1.getStyleClass().add("custom");
+	            //System.out.println(easyRadioButton.isSelected());
+		    tf1.getStyleClass().remove("initial");
+		    tf7.getStyleClass().remove("initial");
+		    tf8.getStyleClass().remove("initial");
+		    tf1.getStyleClass().add("custom");
 	            tf7.getStyleClass().add("custom");
 	            tf8.getStyleClass().add("custom");
+	            //System.out.println("End Easy");
 	        }
 	        else if (mediumRadioButton.isSelected() == true) 
 	        {
+	            //System.out.println(mediumRadioButton.isSelected());
+	            tf1.getStyleClass().remove("initial");
+	            tf4.getStyleClass().remove("initial");
+                    tf9.getStyleClass().remove("initial");
+                    tf13.getStyleClass().remove("initial");
+
 	            tf1.getStyleClass().add("custom");
 	            tf4.getStyleClass().add("custom");
 	            tf9.getStyleClass().add("custom");
 	            tf13.getStyleClass().add("custom");
+	            //System.out.println("End Medium");
 	        }
 	        else if (hardRadioButton.isSelected() == true) 
 	        {
+	            //System.out.println(hardRadioButton.isSelected());
+	            tf1.getStyleClass().remove("initial");
+	            tf4.getStyleClass().remove("initial");
+	            tf10.getStyleClass().remove("initial");
+	            tf15.getStyleClass().remove("initial");
+	            tf20.getStyleClass().remove("initial");
+	            tf22.getStyleClass().remove("initial");
+	            
 	            tf1.getStyleClass().add("custom");
 	            tf4.getStyleClass().add("custom");
 	            tf10.getStyleClass().add("custom");
 	            tf15.getStyleClass().add("custom");
 	            tf20.getStyleClass().add("custom");
 	            tf22.getStyleClass().add("custom");
+	            //System.out.println("End Hard");
 	        }
 		
 		Words word = new Words();
