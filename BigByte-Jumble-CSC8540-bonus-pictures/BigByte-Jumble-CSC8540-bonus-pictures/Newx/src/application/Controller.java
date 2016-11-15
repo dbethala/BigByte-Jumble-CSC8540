@@ -76,7 +76,6 @@ public class Controller {
 	@FXML private Label difflabel, labelw1, labelw2, labelw3,labelw4, labelw5;
 	private List<GridPane> grid = new ArrayList<GridPane>();
 	int Hintcounter; // to keep track of the number of hints
-    private boolean timerFlag = false;
     
 	public void setMain(Main main){
 	this.main=main; // now the main class is connected with the controller now i can call any method form the main.
@@ -158,6 +157,7 @@ public class Controller {
 		picture2.setVisible(false);
 		picture3.setVisible(false);
 		timer.stop();
+		checkTextFields();
 		for(GridPane x : grid){ //adding all the text field elements of each grid to textfield arraylist so I can clear them at once
 			for (Node node : x.getChildren()) {
 			    System.out.println("Id: " + node.getId());
@@ -244,6 +244,37 @@ public class Controller {
 			timerField.setText(difference.toString() + "s");	//Appends the "s" and prints time in seconds
 		}
 	};
+	
+	private void checkTextFields() {
+		String level = verifyLevel();
+		switch(level) {
+			case "easy":
+				
+		}
+	}
+	
+	private String verifyLevel() {
+		String level = "Level not selected";
+
+		if (easyRadioButton.isSelected()) {
+			level = "easy";
+		} else if (mediumRadioButton.isSelected()) {
+			level = "medium";
+		} else if (hardRadioButton.isSelected()) {
+			level = "hard";
+		}
+		return level;
+	}
+	private String wordBuilder (TextField[] inputFields) {
+		String builtWord = null;
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < 6; i++) {
+			if (!inputFields[i].getCharacters().equals(null)) {
+				builtWord = sb.append(inputFields[i].getCharacters()).toString();
+			}
+		}
+		return builtWord;
+	}
 }
 
 
