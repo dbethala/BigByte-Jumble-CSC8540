@@ -2,6 +2,7 @@ package application;
 
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.StringProperty;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
 import javax.swing.JFrame;
@@ -13,6 +14,7 @@ import com.sun.glass.ui.Window;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -66,10 +68,12 @@ public class Controller {
 	@FXML private GridPane gp3; // iteration 4
 	@FXML private GridPane gp4; // iteration 4
 	@FXML private GridPane gp5; // iteration 4
+	@FXML private GridPane gpBig;
 	@FXML private Text timerField;
 	@FXML private Button end;
 	@FXML private Button button1;
 	@FXML private Button button2;
+	@FXML private Button solveButton;
 	@FXML private ImageView picture1;
 	@FXML private ImageView picture2;
 	@FXML private ImageView picture3;
@@ -80,7 +84,7 @@ public class Controller {
 	public void setMain(Main main){
 	this.main=main; // now the main class is connected with the controller now i can call any method form the main.
 
-	//tf1.getStyleClass().add("custom"); HIGHLIGHTS WOWWWWWWW
+	
 	easyRadioButton.getStyleClass().add("custom1");
 	mediumRadioButton.getStyleClass().add("custom1");
 	hardRadioButton.getStyleClass().add("custom1");
@@ -139,12 +143,40 @@ public class Controller {
 	}
 	
 	public void endGame(){
+		easyRadioButton.setDisable(false);
+		mediumRadioButton.setDisable(false);
+		hardRadioButton.setDisable(false);
 		button1.setDisable(false); // enabling the start
 		button2.setDisable(true); // disabling the hint button
 		Hintcounter=0; // So I work with hint button counter again
 		
-	
+		if (easyRadioButton.isSelected() == true) 
+                {
+                    tf1.getStyleClass().add("initial");
+                    tf7.getStyleClass().add("initial");
+                    tf8.getStyleClass().add("initial");
+                }
+                 if (mediumRadioButton.isSelected() == true) 
+                {
+                    tf1.getStyleClass().add("initial");
+                    tf4.getStyleClass().add("initial");
+                    tf9.getStyleClass().add("initial");
+                    tf13.getStyleClass().add("initial");
+                }
+                else if (hardRadioButton.isSelected() == true) 
+                {
+                    tf1.getStyleClass().add("initial");
+                    tf4.getStyleClass().add("initial");
+                    tf10.getStyleClass().add("initial");
+                    tf15.getStyleClass().add("initial");
+                    tf20.getStyleClass().add("initial");
+                    tf22.getStyleClass().add("initial");
+                }
 		grid.add(gp1); grid.add(gp2);grid.add(gp3); grid.add(gp4);grid.add(gp5); // adding all the gridpanes to the gridArrayList 
+		
+		// This has to be before setting the radio button selection to falsae
+		
+		
 		easyRadioButton.setSelected(false);
 		mediumRadioButton.setSelected(false);
 		hardRadioButton.setSelected(false);
@@ -159,6 +191,22 @@ public class Controller {
 		timer.stop();
 		checkTextFields();
 		for(GridPane x : grid){ //adding all the text field elements of each grid to textfield arraylist so I can clear them at once
+		
+		
+		TextField[] tfArray = { tf1, tf2, tf3, tf4, tf5, tf6,
+		                        tf7, tf8, tf9, tf10, tf11, tf12,
+		                        tf13, tf14, tf15, tf16, tf17, tf18,
+		                        tf19, tf20, tf21, tf22, tf23, tf24,
+		                        tf25, tf26, tf27, tf28, tf29, tf30};
+		for (TextField tf : tfArray) 
+		{
+		    tf.setText("");
+		}
+		}
+		
+		// This section changes the textfield ordering and causes a bug for the background coloring
+		/*for(GridPane x : grid){ //adding all the text field elements of each grid to textfield arraylist so I can clear them at once
+>>>>>>> refs/heads/master
 			for (Node node : x.getChildren()) {
 			    System.out.println("Id: " + node.getId());
 			    if (node instanceof TextField) {
@@ -166,50 +214,131 @@ public class Controller {
 			        ((TextField)node).setText("");
 			    }
 			}
-		}
+		}*/
 	
 	}
 	
 
 	public void handleButton(){
 		
+		label1.setVisible(true);
+		label2.setVisible(true);
+		label3.setVisible(true);
+		label4.setVisible(true);
+		label5.setVisible(true);
+		easyRadioButton.setDisable(true);
+		mediumRadioButton.setDisable(true);
+		hardRadioButton.setDisable(true);
+		solveButton.setVisible(true);
+
+
 		button2.setDisable(false); // enabling the hint button again
 		button1.setDisable(true); // disabling the start button
 		end.setDisable(false);
+		
+		if (easyRadioButton.isSelected() == true) 
+	        {
+	            //System.out.println(easyRadioButton.isSelected());
+		    tf1.getStyleClass().remove("initial");
+		    tf7.getStyleClass().remove("initial");
+		    tf8.getStyleClass().remove("initial");
+		    tf1.getStyleClass().add("custom");
+	            tf7.getStyleClass().add("custom");
+	            tf8.getStyleClass().add("custom");
+	            //System.out.println("End Easy");
+	        }
+	        else if (mediumRadioButton.isSelected() == true) 
+	        {
+	            //System.out.println(mediumRadioButton.isSelected());
+	            tf1.getStyleClass().remove("initial");
+	            tf4.getStyleClass().remove("initial");
+                    tf9.getStyleClass().remove("initial");
+                    tf13.getStyleClass().remove("initial");
+
+	            tf1.getStyleClass().add("custom");
+	            tf4.getStyleClass().add("custom");
+	            tf9.getStyleClass().add("custom");
+	            tf13.getStyleClass().add("custom");
+	            //System.out.println("End Medium");
+	        }
+	        else if (hardRadioButton.isSelected() == true) 
+	        {
+	            //System.out.println(hardRadioButton.isSelected());
+	            tf1.getStyleClass().remove("initial");
+	            tf4.getStyleClass().remove("initial");
+	            tf10.getStyleClass().remove("initial");
+	            tf15.getStyleClass().remove("initial");
+	            tf20.getStyleClass().remove("initial");
+	            tf22.getStyleClass().remove("initial");
+	            
+	            tf1.getStyleClass().add("custom");
+	            tf4.getStyleClass().add("custom");
+	            tf10.getStyleClass().add("custom");
+	            tf15.getStyleClass().add("custom");
+	            tf20.getStyleClass().add("custom");
+	            tf22.getStyleClass().add("custom");
+	            //System.out.println("End Hard");
+	        }
+		
 		Words word = new Words();
 		
-		for(int i = 0; i < wordsHard.length; i++)
-		{
-			word.shuffleword(wordsHard[i]);
-			
-			wordsHard_NotArranged[i] = word.shuffleword(wordsHard[i]); //saving each Notarranged word into the not arranged stack
-			
-			//System.out.println(word.shuffleword(wordsHard[i])); We don't need this
+		//Generate Word set
+		
+		if(easyRadioButton.isSelected()==true){						
+				for(int i = 0; i < wordsEasy.length; i++)
+				{
+					word.shuffleword(wordsEasy[i]);
+					wordsEasy_NotArranged[i] = word.shuffleword(wordsEasy[i]);
+				}
+				label1.setText(wordsEasy_NotArranged[0]);	//set jumbled words
+				label2.setText(wordsEasy_NotArranged[1]);	
 		}
 		
-		label1.setText(wordsHard_NotArranged[0]);
-		label2.setText(wordsHard_NotArranged[1]);
-		label3.setText(wordsHard_NotArranged[2]);
-		label4.setText(wordsHard_NotArranged[3]);
+		if(mediumRadioButton.isSelected()==true){
+			for(int i=0; i<wordsMedium.length;i++)
+				
+			{
+				word.shuffleword(wordsMedium[i]);
+				wordsMedium_NotArranged[i]=word.shuffleword(wordsMedium[i]);
+			}
+			
+			label1.setText(wordsMedium_NotArranged[0]);
+			label2.setText(wordsMedium_NotArranged[1]);
+			label3.setText(wordsMedium_NotArranged[2]);
+			}
+		
+		if(hardRadioButton.isSelected()==true){
+			for(int i=0; i<wordsHard.length;i++)
+				
+			{
+				word.shuffleword(wordsHard[i]);
+				wordsHard_NotArranged[i]=word.shuffleword(wordsHard[i]);
+			}
+			
+			label1.setText(wordsHard_NotArranged[0]);
+			label2.setText(wordsHard_NotArranged[1]);
+			label3.setText(wordsHard_NotArranged[2]);
+			label4.setText(wordsHard_NotArranged[3]);
+			}
+		
 		/////////////	THIS PART FOR THE PICTURE ///////////////
 		if(easyRadioButton.isSelected()){
 			picture1.setVisible(true);
 			picture2.setVisible(false);
 			picture3.setVisible(false);
 			
-			
 		}
+		
 		if(mediumRadioButton.isSelected()){
 			picture1.setVisible(false);
 			picture2.setVisible(true);
 			picture3.setVisible(false);
-		
 		}
+		
 		if(hardRadioButton.isSelected()){
 			picture1.setVisible(false);
 			picture2.setVisible(false);
 			picture3.setVisible(true);
-			
 		}
 		
 		label1.setVisible(true);
@@ -217,10 +346,10 @@ public class Controller {
 		label3.setVisible(true);
 		label4.setVisible(true);
 		/////////////////// END OF PICTURE HANDLING/////////////////////
-			timer.start();
-		
-		
+	    difficultyUI();									//set difficulty UI
+		settextfield();									//call text field limit method
 	}
+	
 	//Method to set timer. Implements AnimationTimer to spawn new thread to update UI
 	AnimationTimer timer = new AnimationTimer() {
 		private long startTime; //Variable to hold system time
@@ -245,11 +374,108 @@ public class Controller {
 		}
 	};
 	
+	public EventHandler<KeyEvent> maxLength(final Integer i){	//event handler, limits text limit in whatever text field passed to it to 1
+		return new EventHandler<KeyEvent>(){
+			@Override
+			public void handle(KeyEvent arg0) {
+				TextField tf = (TextField) arg0.getSource();
+				if(tf.getText().length()>=i){
+					arg0.consume();
+				}
+			}
+		};
+		
+	}
+	private void difficultyUI(){
+		if(easyRadioButton.isSelected()==true){
+			gpBig.getChildren().clear();						//cleared and re-added children to avoid errors 
+			gpBig.getChildren().add(gp1);				//There might be a better way to do this
+			gpBig.getChildren().add(gp2);
+			gpBig.getChildren().add(gp5);
+			gpBig.getChildren().add(labelw1);
+			gpBig.getChildren().add(labelw2);
+			gpBig.getChildren().add(labelw5);
+			gpBig.getChildren().add(label1);
+			gpBig.getChildren().add(label2);
+			gpBig.getChildren().add(label5);	
+		}
+		
+		if(mediumRadioButton.isSelected()==true){
+			gpBig.getChildren().clear();						//cleared and re-added children to avoid errors 
+			gpBig.getChildren().add(gp1);				//There might be a better way to do this
+			gpBig.getChildren().add(gp2);
+			gpBig.getChildren().add(gp3);
+			gpBig.getChildren().add(gp5);
+			gpBig.getChildren().add(labelw1);
+			gpBig.getChildren().add(labelw2);
+			gpBig.getChildren().add(labelw3);
+			gpBig.getChildren().add(labelw5);
+			gpBig.getChildren().add(label1);
+			gpBig.getChildren().add(label2);
+			gpBig.getChildren().add(label3);
+			gpBig.getChildren().add(label5);
+		
+		
+		}
+		if(hardRadioButton.isSelected()==true){
+			gpBig.getChildren().clear();						//cleared and re-added children to avoid errors 
+			gpBig.getChildren().add(gp1);				//There might be a better way to do this
+			gpBig.getChildren().add(gp2);
+			gpBig.getChildren().add(gp3);
+			gpBig.getChildren().add(gp4);
+			gpBig.getChildren().add(gp5);
+			gpBig.getChildren().add(labelw1);
+			gpBig.getChildren().add(labelw2);
+			gpBig.getChildren().add(labelw3);
+			gpBig.getChildren().add(labelw4);
+			gpBig.getChildren().add(labelw5);
+			gpBig.getChildren().add(label1);
+			gpBig.getChildren().add(label2);
+			gpBig.getChildren().add(label3);
+			gpBig.getChildren().add(label4);
+			gpBig.getChildren().add(label5);
+		}
+		
+	}
+	
+	public void settextfield(){										//added event handler for each text field
+		tf1.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf2.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf3.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf4.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf5.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf6.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf7.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf8.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf9.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf10.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf11.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf12.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf13.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf14.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf15.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf16.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf17.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf18.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf19.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf20.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf21.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf22.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf22.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf23.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf24.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf25.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf26.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf27.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf28.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf29.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf30.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));		
+	}
+
 	private void checkTextFields() {
 		String level = verifyLevel();
 		switch(level) {
 			case "easy":
-				
 		}
 	}
 	
@@ -265,6 +491,7 @@ public class Controller {
 		}
 		return level;
 	}
+	
 	private String wordBuilder (TextField[] inputFields) {
 		String builtWord = null;
 		StringBuilder sb = new StringBuilder();
@@ -274,6 +501,10 @@ public class Controller {
 			}
 		}
 		return builtWord;
+	}
+	
+	private void solvePuzzle() {
+		System.out.println(gp1.getChildren().toString());
 	}
 }
 
