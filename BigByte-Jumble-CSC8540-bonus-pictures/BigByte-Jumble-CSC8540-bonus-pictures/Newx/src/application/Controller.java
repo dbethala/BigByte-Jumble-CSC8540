@@ -2,6 +2,7 @@ package application;
 
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.StringProperty;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
 import javax.swing.JFrame;
@@ -13,6 +14,7 @@ import com.sun.glass.ui.Window;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -66,6 +68,7 @@ public class Controller {
 	@FXML private GridPane gp3; // iteration 4
 	@FXML private GridPane gp4; // iteration 4
 	@FXML private GridPane gp5; // iteration 4
+	@FXML private GridPane gpBig;
 	@FXML private Text timerField;
 	@FXML private Button end;
 	@FXML private Button button1;
@@ -170,24 +173,51 @@ public class Controller {
 
 	public void handleButton(){
 		
+		label1.setVisible(true);
+		label2.setVisible(true);
+		label3.setVisible(true);
+		label4.setVisible(true);
+
+
 		button2.setDisable(false); // enabling the hint button again
 		button1.setDisable(true); // disabling the start button
 		end.setDisable(false);
 		Words word = new Words();
 		
-		for(int i = 0; i < wordsHard.length; i++)
-		{
-			word.shuffleword(wordsHard[i]);
-			
-			wordsHard_NotArranged[i] = word.shuffleword(wordsHard[i]); //saving each Notarranged word into the not arranged stack
-			
-			//System.out.println(word.shuffleword(wordsHard[i])); We don't need this
-		}
+		//Generate Word set
 		
-		label1.setText(wordsHard_NotArranged[0]);
-		label2.setText(wordsHard_NotArranged[1]);
-		label3.setText(wordsHard_NotArranged[2]);
-		label4.setText(wordsHard_NotArranged[3]);
+		if(easyRadioButton.isSelected()==true){						
+				for(int i = 0; i < wordsEasy.length; i++)
+				{
+					word.shuffleword(wordsEasy[i]);
+					wordsEasy_NotArranged[i] = word.shuffleword(wordsEasy[i]);
+				}
+				label1.setText(wordsEasy_NotArranged[0]);	//set jumbled words
+				label2.setText(wordsEasy_NotArranged[1]);		
+		}
+		if(mediumRadioButton.isSelected()==true){
+			for(int i=0; i<wordsMedium.length;i++)
+			{
+				word.shuffleword(wordsMedium[i]);
+				wordsMedium_NotArranged[i]=word.shuffleword(wordsMedium[i]);
+				}
+			label1.setText(wordsMedium_NotArranged[0]);
+			label2.setText(wordsMedium_NotArranged[1]);
+			label3.setText(wordsMedium_NotArranged[2]);
+			}
+		if(hardRadioButton.isSelected()==true){
+			for(int i=0; i<wordsHard.length;i++)
+			{
+				word.shuffleword(wordsHard[i]);
+				wordsHard_NotArranged[i]=word.shuffleword(wordsHard[i]);
+				}
+			label1.setText(wordsHard_NotArranged[0]);
+			label2.setText(wordsHard_NotArranged[1]);
+			label3.setText(wordsHard_NotArranged[2]);
+			label4.setText(wordsHard_NotArranged[3]);
+			}
+
+		
 		/////////////	THIS PART FOR THE PICTURE ///////////////
 		if(easyRadioButton.isSelected()){
 			picture1.setVisible(true);
@@ -214,6 +244,9 @@ public class Controller {
 		label3.setVisible(true);
 		label4.setVisible(true);
 		/////////////////// END OF PICTURE HANDLING/////////////////////
+	    difficultyUI();									//set difficulty UI
+		settextfield();									//call text field limit method
+
 		
 			setTimer();
 		
@@ -247,6 +280,118 @@ public class Controller {
 			}.start();
 				
 		}
+	
+	public EventHandler<KeyEvent> maxLength(final Integer i){	//event handler, limits text limit in whatever text field passed to it to 1
+		return new EventHandler<KeyEvent>(){
+			@Override
+			public void handle(KeyEvent arg0) {
+				TextField tf = (TextField) arg0.getSource();
+				if(tf.getText().length()>=i){
+					arg0.consume();
+				
+
+				}
+			}
+		};
+		
+	}
+	private void difficultyUI(){
+		if(easyRadioButton.isSelected()==true){
+			gpBig.getChildren().clear();						//cleared and re-added children to avoid errors 
+			gpBig.getChildren().add(gp1);				//There might be a better way to do this
+			gpBig.getChildren().add(gp2);
+			gpBig.getChildren().add(gp5);
+			gpBig.getChildren().add(labelw1);
+			gpBig.getChildren().add(labelw2);
+			gpBig.getChildren().add(labelw5);
+			gpBig.getChildren().add(label1);
+			gpBig.getChildren().add(label2);
+			gpBig.getChildren().add(label5);
+			
+			
+			
+		}
+		if(mediumRadioButton.isSelected()==true){
+			gpBig.getChildren().clear();						//cleared and re-added children to avoid errors 
+			gpBig.getChildren().add(gp1);				//There might be a better way to do this
+			gpBig.getChildren().add(gp2);
+			gpBig.getChildren().add(gp3);
+			gpBig.getChildren().add(gp5);
+			gpBig.getChildren().add(labelw1);
+			gpBig.getChildren().add(labelw2);
+			gpBig.getChildren().add(labelw3);
+			gpBig.getChildren().add(labelw5);
+			gpBig.getChildren().add(label1);
+			gpBig.getChildren().add(label2);
+			gpBig.getChildren().add(label3);
+			gpBig.getChildren().add(label5);
+		
+		
+		}
+		if(hardRadioButton.isSelected()==true){
+			gpBig.getChildren().clear();						//cleared and re-added children to avoid errors 
+			gpBig.getChildren().add(gp1);				//There might be a better way to do this
+			gpBig.getChildren().add(gp2);
+			gpBig.getChildren().add(gp3);
+			gpBig.getChildren().add(gp4);
+			gpBig.getChildren().add(gp5);
+			gpBig.getChildren().add(labelw1);
+			gpBig.getChildren().add(labelw2);
+			gpBig.getChildren().add(labelw3);
+			gpBig.getChildren().add(labelw4);
+			gpBig.getChildren().add(labelw5);
+			gpBig.getChildren().add(label1);
+			gpBig.getChildren().add(label2);
+			gpBig.getChildren().add(label3);
+			gpBig.getChildren().add(label4);
+			gpBig.getChildren().add(label5);
+			
+		
+		
+		}
+		
+	}
+	public void settextfield(){										//added event handler for each text field
+		tf1.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf2.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf3.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf4.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf5.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf6.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf7.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf8.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf9.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf10.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf11.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf12.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf13.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf14.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf15.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf16.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf17.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf18.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf19.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf20.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf21.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf22.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf22.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf23.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf24.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf25.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf26.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf27.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf28.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf29.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		tf30.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));
+		
+		
+	
+		
+		
+	}
+
+	
+	
 
 		
 	}
