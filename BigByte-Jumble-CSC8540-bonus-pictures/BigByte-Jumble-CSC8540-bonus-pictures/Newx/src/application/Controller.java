@@ -142,6 +142,9 @@ public class Controller {
 	}
 	
 	public void endGame(){
+		easyRadioButton.setDisable(false);
+		mediumRadioButton.setDisable(false);
+		hardRadioButton.setDisable(false);
 		button1.setDisable(false); // enabling the start
 		button2.setDisable(true); // disabling the hint button
 		Hintcounter=0; // So I work with hint button counter again
@@ -178,6 +181,9 @@ public class Controller {
 		label3.setVisible(true);
 		label4.setVisible(true);
 		label5.setVisible(true);
+		easyRadioButton.setDisable(true);
+		mediumRadioButton.setDisable(true);
+		hardRadioButton.setDisable(true);
 
 
 		button2.setDisable(false); // enabling the hint button again
