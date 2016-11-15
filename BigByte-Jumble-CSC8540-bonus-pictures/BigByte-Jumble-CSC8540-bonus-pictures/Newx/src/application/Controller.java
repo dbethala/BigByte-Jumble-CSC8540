@@ -177,6 +177,7 @@ public class Controller {
 		label2.setVisible(true);
 		label3.setVisible(true);
 		label4.setVisible(true);
+		label5.setVisible(true);
 
 
 		button2.setDisable(false); // enabling the hint button again
@@ -193,7 +194,7 @@ public class Controller {
 					wordsEasy_NotArranged[i] = word.shuffleword(wordsEasy[i]);
 				}
 				label1.setText(wordsEasy_NotArranged[0]);	//set jumbled words
-				label2.setText(wordsEasy_NotArranged[1]);		
+				label2.setText(wordsEasy_NotArranged[1]);	
 		}
 		if(mediumRadioButton.isSelected()==true){
 			for(int i=0; i<wordsMedium.length;i++)
