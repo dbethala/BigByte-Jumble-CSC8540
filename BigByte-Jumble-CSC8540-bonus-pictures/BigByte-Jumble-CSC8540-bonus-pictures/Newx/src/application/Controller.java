@@ -352,12 +352,17 @@ public class Controller {
 			picture1.setVisible(false);
 			picture2.setVisible(true);
 			picture3.setVisible(false);
+			picture2.setVisible(false);
+			picture3.setVisible(true);
+		
 		}
 		
 		if(hardRadioButton.isSelected()){
 			picture1.setVisible(false);
 			picture2.setVisible(false);
 			picture3.setVisible(true);
+			picture2.setVisible(true);
+			picture3.setVisible(false);
 		}
 		
 		label1.setVisible(true);
