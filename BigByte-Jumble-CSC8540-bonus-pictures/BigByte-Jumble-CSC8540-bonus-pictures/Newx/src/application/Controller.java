@@ -225,6 +225,12 @@ public class Controller {
 
 	public void handleButton(){
 		
+		TextField[] tfArray = { tf1, tf2, tf3, tf4, tf5, tf6,
+                tf7, tf8, tf9, tf10, tf11, tf12,
+                tf13, tf14, tf15, tf16, tf17, tf18,
+                tf19, tf20, tf21, tf22, tf23, tf24,
+                tf25, tf26, tf27, tf28, tf29, tf30};
+		
 		label1.setVisible(true);
 		label2.setVisible(true);
 		label3.setVisible(true);
@@ -234,11 +240,11 @@ public class Controller {
 		mediumRadioButton.setDisable(true);
 		hardRadioButton.setDisable(true);
 		solveButton.setVisible(true);
-		tfLabel1.setText("????");
-		tfLabel2.setText("????");
-		tfLabel3.setText("????");
-		tfLabel4.setText("????");
-		tfBonusWordLabel.setText("????");
+		
+		Label[] tfArr = {tfLabel1, tfLabel2, tfLabel3, tfLabel4, tfBonusWordLabel};
+		for (Label tfLabel : tfArr) {
+			tfLabel.setText("?????");
+		}
 		
 		timer.start();
 
@@ -260,6 +266,23 @@ public class Controller {
 	            
 	            tfLabel3.setVisible(false);
 	    		tfLabel4.setVisible(false);
+	    		
+	    		for(TextField tf : tfArray) {
+	    			tf.setVisible(true);
+	    		}
+	    		
+	    		//Hiding the last three text fields for gp1, gp2, and gp5
+	    		tf4.setVisible(false);
+	    		tf5.setVisible(false);
+	    		tf6.setVisible(false);
+	    		
+	    		tf10.setVisible(false);
+	    		tf11.setVisible(false);
+	    		tf12.setVisible(false);
+	    		
+	    		tf28.setVisible(false);
+	    		tf29.setVisible(false);
+	    		tf30.setVisible(false);
 
 	        }
 	        else if (mediumRadioButton.isSelected() == true) 
@@ -277,6 +300,26 @@ public class Controller {
 	            //System.out.println("End Medium");
 	            tfLabel3.setVisible(true);
 	            tfLabel4.setVisible(false);
+	            
+	            for (TextField tf : tfArray) {
+	            	tf.setVisible(true);
+	            }
+	            
+	            //Making the unused textfields invisible
+	            
+	            //tf4.setVisible(true);
+	            //tf5.setVisible(true);
+	            tf6.setVisible(false);
+	            //tf10.setVisible(true);
+	            //tf11.setVisible(true);
+	            tf12.setVisible(false);
+	            //tf16.setVisible(true);
+	            tf17.setVisible(false);
+	            tf18.setVisible(false);
+	            //tf28.setVisible(true);
+	            tf29.setVisible(false);
+	            tf30.setVisible(false);
+	            
 	        }
 	        else if (hardRadioButton.isSelected() == true) 
 	        {
@@ -297,6 +340,24 @@ public class Controller {
 	            //System.out.println("End Hard");
 	            tfLabel3.setVisible(true);
 	            tfLabel4.setVisible(true);
+	            
+	            
+	            for (TextField tf : tfArray) {
+	            	tf.setVisible(true);
+	            }
+	            
+	            //Making the unused textfields invisible
+	            
+	            tf5.setVisible(false);
+	            tf6.setVisible(false);
+	            
+	            tf12.setVisible(false);
+	            
+	            tf18.setVisible(false);
+	            
+	            tf23.setVisible(false);
+	            tf24.setVisible(false);
+	            
 	        }
 		
 		Words word = new Words();
@@ -594,9 +655,9 @@ public class Controller {
 	private String wordBuilder (TextField[] inputFields) {
 		String builtWord = null;
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < inputFields.length; i++) {
+		for (TextField tf: inputFields)/*(int i = 0; i < inputFields.length; i++) */{
 			//Does a preliminary check to see if an index is empty
-				builtWord = sb.append(inputFields[i].getCharacters()).toString();
+				builtWord = sb.append(/*inputFields[i]*/tf.getCharacters()).toString();
 			}
 		return builtWord;
 		}
