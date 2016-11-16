@@ -18,6 +18,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.shape.Circle;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.TextField;
@@ -78,6 +79,7 @@ public class Controller {
 	@FXML private ImageView picture2;
 	@FXML private ImageView picture3;
 	@FXML private Label difflabel, labelw1, labelw2, labelw3,labelw4, labelw5;
+	@FXML private Circle tfCircle1, tfCircle2, tfCircle3, tfCircle4, tfBonusWordCircle;
 	private List<GridPane> grid = new ArrayList<GridPane>();
 	int Hintcounter; // to keep track of the number of hints
     
@@ -98,7 +100,8 @@ public class Controller {
 	label5.getStyleClass().add("custom1");
 	labelw1.getStyleClass().add("label");
 	button2.getStyleClass().add("button");
-	
+	solveButton.getStyleClass().add("button");
+	solveButton.setVisible(false);
 	picture1.setVisible(false);
 	picture2.setVisible(false);
 	picture3.setVisible(false);
@@ -230,6 +233,8 @@ public class Controller {
 		mediumRadioButton.setDisable(true);
 		hardRadioButton.setDisable(true);
 		solveButton.setVisible(true);
+		
+		timer.start();
 
 
 		button2.setDisable(false); // enabling the hint button again
@@ -246,6 +251,11 @@ public class Controller {
 	            tf7.getStyleClass().add("custom");
 	            tf8.getStyleClass().add("custom");
 	            //System.out.println("End Easy");
+	            tfCircle1.setVisible(true);
+	            tfCircle2.setVisible(true);
+	            tfCircle3.setVisible(false);
+	            tfCircle4.setVisible(false);
+	            tfBonusWordCircle.setVisible(true);
 	        }
 	        else if (mediumRadioButton.isSelected() == true) 
 	        {
@@ -260,6 +270,12 @@ public class Controller {
 	            tf9.getStyleClass().add("custom");
 	            tf13.getStyleClass().add("custom");
 	            //System.out.println("End Medium");
+	            
+	            tfCircle1.setVisible(true);
+	            tfCircle2.setVisible(true);
+	            tfCircle3.setVisible(true);
+	            tfCircle4.setVisible(false);
+	            tfBonusWordCircle.setVisible(true);
 	        }
 	        else if (hardRadioButton.isSelected() == true) 
 	        {
@@ -278,6 +294,12 @@ public class Controller {
 	            tf20.getStyleClass().add("custom");
 	            tf22.getStyleClass().add("custom");
 	            //System.out.println("End Hard");
+	            
+	            tfCircle1.setVisible(true);
+	            tfCircle2.setVisible(true);
+	            tfCircle3.setVisible(true);
+	            tfCircle4.setVisible(true);
+	            tfBonusWordCircle.setVisible(true);
 	        }
 		
 		Words word = new Words();
@@ -414,9 +436,8 @@ public class Controller {
 			gpBig.getChildren().add(label2);
 			gpBig.getChildren().add(label3);
 			gpBig.getChildren().add(label5);
-		
-		
 		}
+		
 		if(hardRadioButton.isSelected()==true){
 			gpBig.getChildren().clear();						//cleared and re-added children to avoid errors 
 			gpBig.getChildren().add(gp1);				//There might be a better way to do this
@@ -472,13 +493,54 @@ public class Controller {
 		tf30.addEventHandler(KeyEvent.KEY_TYPED, maxLength(1));		
 	}
 
-	private void checkTextFields() {
+	private String[] checkTextFields() {
 		String level = verifyLevel();
-		switch(level) {
-			case "easy":
+		TextField [] tfArray = {tf1, tf2, tf3, tf4, tf5, tf6, tf7, tf8, tf9,
+								tf10, tf11, tf12, tf13, tf14, tf15, tf16, tf17,
+								tf18, tf19, tf20, tf21, tf22, tf23, tf24, tf25,
+								tf26, tf27, tf28, tf29, tf30};
+		//Building "character" arrays for each word
+		TextField[] word1 = {tf1, tf2, tf3, tf4, tf5, tf6};
+		TextField[] word2 = {tf7, tf8, tf9, tf10, tf11, tf12};
+		TextField[] word3 = {tf13, tf14, tf15, tf16, tf17, tf18};
+		TextField[] word4 = {tf19, tf20, tf21, tf22, tf23, tf24};
+		TextField[] bonusWord = {tf25, tf26, tf27, tf28, tf29, tf30};
+		
+		//Array for the final Strings of the characters combined
+		String[] builtWords = new String[5];
+		
+		//Placeholder for the bonus word
+		String bonusWordBuilt = null;
+		
+		//Array of broken TextFields
+		TextField[][] brokenWords = {word1, word2, word3, word4};
+		
+		//Loops through the TextFields array and builds the words, stores them in 
+		//String array
+		int i = 0;
+		if (verifyLevel().equals("easy")) {
+		for (i= 0; i < 2; i++) {
+			builtWords[i] = wordBuilder(brokenWords[i]);
+			}
+		} else if (verifyLevel().equals("medium")) {
+			for (i = 0; i < 3; i++) {
+				builtWords[i] = wordBuilder(brokenWords[i]);
+				}
+		} else if (verifyLevel().equals("hard")) {
+			for (i = 0; i < 4; i++) {
+				builtWords[i] = wordBuilder(brokenWords[i]);
+				}
 		}
+		System.out.println(i);
+		
+		//Separate function to handle the bonus word
+		bonusWordBuilt = wordBuilder(bonusWord);
+		builtWords[i] = bonusWordBuilt;
+		
+		return builtWords;
 	}
 	
+	//Function to check and return level
 	private String verifyLevel() {
 		String level = "Level not selected";
 
@@ -492,19 +554,56 @@ public class Controller {
 		return level;
 	}
 	
+	private boolean[] solutionChecker(String[] wordArray) {
+		String difficultyLevel =  verifyLevel();
+		boolean scoreArray[] = new boolean[wordArray.length + 1];
+		switch (difficultyLevel) {
+			case "easy":
+				for (int i = 0; i < 3; i++) {
+					int result = wordsEasy[i].compareToIgnoreCase(wordArray[i]);
+					if (result == 0) {
+						scoreArray[i] = true;
+					} else {
+						scoreArray[i] = false;
+					}
+				} break;
+			case "medium":
+				for (int i = 0; i < 4; i++) {
+					int result = wordsMedium[i].compareToIgnoreCase(wordArray[i]);
+					if (result == 0) {
+						scoreArray[i] = true;
+					} else {
+						scoreArray[i] = false;
+					}
+				} break;
+			case "hard":
+				for (int i = 0; i < 5; i++) {
+					int result = wordsHard[i].compareToIgnoreCase(wordArray[i]);
+					if (result == 0) {
+						scoreArray[i] = true;
+					} else {
+						scoreArray[i] = false;
+				}
+			}
+		}
+		return scoreArray;
+	}
+	
+	//Function to build words from TextField arrays
 	private String wordBuilder (TextField[] inputFields) {
 		String builtWord = null;
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < 6; i++) {
-			if (!inputFields[i].getCharacters().equals(null)) {
+		for (int i = 0; i < inputFields.length; i++) {
+			//Does a preliminary check to see if an index is empty
 				builtWord = sb.append(inputFields[i].getCharacters()).toString();
 			}
-		}
 		return builtWord;
-	}
+		}
 	
-	private void solvePuzzle() {
-		System.out.println(gp1.getChildren().toString());
+	public void solvePuzzle() {
+		timer.stop();
+		System.out.println(solutionChecker(checkTextFields())[0]);
+		
 	}
 }
 
