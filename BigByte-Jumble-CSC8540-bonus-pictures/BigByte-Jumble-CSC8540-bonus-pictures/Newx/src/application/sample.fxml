@@ -329,6 +329,11 @@
             <Font size="18.0" />
          </font></Label>
       <Button fx:id="solveButton" layoutX="475.0" layoutY="435.0" mnemonicParsing="false" onAction="#solvePuzzle" text="Solve" />
+      <Label id="tfLabel1" fx:id="tfLabel1" layoutX="241.0" layoutY="98.0" text="????" />
+      <Label id="tfLabel2" fx:id="tfLabel2" layoutX="243.0" layoutY="188.0" text="????" />
+      <Label id="tfLabel3" fx:id="tfLabel3" layoutX="243.0" layoutY="277.0" text="????" />
+      <Label id="tfLabel4" fx:id="tfLabel4" layoutX="243.0" layoutY="366.0" text="????" />
+      <Label id="tfBonusWordLabel" fx:id="tfBonusWordLabel" layoutX="243.0" layoutY="454.0" text="????" />
       
    </children>
 </AnchorPane>

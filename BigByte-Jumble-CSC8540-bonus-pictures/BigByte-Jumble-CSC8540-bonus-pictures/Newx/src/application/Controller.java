@@ -79,8 +79,9 @@ public class Controller {
 	@FXML private ImageView picture2;
 	@FXML private ImageView picture3;
 	@FXML private Label difflabel, labelw1, labelw2, labelw3,labelw4, labelw5;
-	@FXML private Circle tfCircle1, tfCircle2, tfCircle3, tfCircle4, tfBonusWordCircle;
+	@FXML private Label tfLabel1, tfLabel2, tfLabel3, tfLabel4, tfBonusWordLabel;
 	private List<GridPane> grid = new ArrayList<GridPane>();
+
 	int Hintcounter; // to keep track of the number of hints
     
 	public void setMain(Main main){
@@ -233,6 +234,11 @@ public class Controller {
 		mediumRadioButton.setDisable(true);
 		hardRadioButton.setDisable(true);
 		solveButton.setVisible(true);
+		tfLabel1.setText("????");
+		tfLabel2.setText("????");
+		tfLabel3.setText("????");
+		tfLabel4.setText("????");
+		tfBonusWordLabel.setText("????");
 		
 		timer.start();
 
@@ -251,11 +257,10 @@ public class Controller {
 	            tf7.getStyleClass().add("custom");
 	            tf8.getStyleClass().add("custom");
 	            //System.out.println("End Easy");
-	            tfCircle1.setVisible(true);
-	            tfCircle2.setVisible(true);
-	            tfCircle3.setVisible(false);
-	            tfCircle4.setVisible(false);
-	            tfBonusWordCircle.setVisible(true);
+	            
+	            tfLabel3.setVisible(false);
+	    		tfLabel4.setVisible(false);
+
 	        }
 	        else if (mediumRadioButton.isSelected() == true) 
 	        {
@@ -270,12 +275,8 @@ public class Controller {
 	            tf9.getStyleClass().add("custom");
 	            tf13.getStyleClass().add("custom");
 	            //System.out.println("End Medium");
-	            
-	            tfCircle1.setVisible(true);
-	            tfCircle2.setVisible(true);
-	            tfCircle3.setVisible(true);
-	            tfCircle4.setVisible(false);
-	            tfBonusWordCircle.setVisible(true);
+	            tfLabel3.setVisible(true);
+	            tfLabel4.setVisible(false);
 	        }
 	        else if (hardRadioButton.isSelected() == true) 
 	        {
@@ -294,12 +295,8 @@ public class Controller {
 	            tf20.getStyleClass().add("custom");
 	            tf22.getStyleClass().add("custom");
 	            //System.out.println("End Hard");
-	            
-	            tfCircle1.setVisible(true);
-	            tfCircle2.setVisible(true);
-	            tfCircle3.setVisible(true);
-	            tfCircle4.setVisible(true);
-	            tfBonusWordCircle.setVisible(true);
+	            tfLabel3.setVisible(true);
+	            tfLabel4.setVisible(true);
 	        }
 		
 		Words word = new Words();
@@ -531,7 +528,6 @@ public class Controller {
 				builtWords[i] = wordBuilder(brokenWords[i]);
 				}
 		}
-		System.out.println(i);
 		
 		//Separate function to handle the bonus word
 		bonusWordBuilt = wordBuilder(bonusWord);
@@ -601,10 +597,54 @@ public class Controller {
 		}
 	
 	public void solvePuzzle() {
+		Label[] labelsArray = {tfLabel1, tfLabel2, tfLabel3, tfLabel4, tfBonusWordLabel};
 		timer.stop();
-		System.out.println(solutionChecker(checkTextFields())[0]);
-		
-	}
+		boolean[] results = solutionChecker(checkTextFields());
+		if (verifyLevel() == "easy") {
+			for (int i = 0; i < 2; i++) {
+				if(results[i]) {
+					//System.out.println(labelsArray[i].getText());
+					labelsArray[i].setText("Correct!");
+				} else {
+					labelsArray[i].setText("Incorrect!");
+				}
+			}
+			if (results[2]) {
+				tfBonusWordLabel.setText("Correct!");
+			} else {
+				tfBonusWordLabel.setText("Incorrect!");
+			}
+		} else if (verifyLevel() == "medium") {
+			for (int i = 0; i < 3; i++) {
+				if(results[i]) {
+					//System.out.println(labelsArray[i].getText());
+					labelsArray[i].setText("Correct!");
+				} else {
+					labelsArray[i].setText("Incorrect!");
+				}
+			}
+			if (results[3]) {
+				tfBonusWordLabel.setText("Correct!");
+			} else {
+				tfBonusWordLabel.setText("Incorrect!");
+			}
+		} else if (verifyLevel() == "hard") {
+			for (int i = 0; i < 4; i++) {
+				if(results[i]) {
+					//System.out.println(labelsArray[i].getText());
+					labelsArray[i].setText("Correct!");
+				} else {
+					labelsArray[i].setText("Incorrect!");
+				}
+			}
+			if (results[4]) {
+				tfBonusWordLabel.setText("Correct!");
+			} else {
+				tfBonusWordLabel.setText("Incorrect!");
+			}
+		}
+	} 
 }
+
 
 
