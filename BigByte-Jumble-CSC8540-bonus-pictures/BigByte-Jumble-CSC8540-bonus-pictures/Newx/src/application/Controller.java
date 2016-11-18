@@ -664,7 +664,6 @@ public class Controller {
 	
 	public void solvePuzzle() {
 		Label[] labelsArray = {tfLabel1, tfLabel2, tfLabel3, tfLabel4, tfBonusWordLabel};
-		timer.stop();
 		boolean[] results = solutionChecker(checkTextFields());
 		if (verifyLevel() == "easy") {
 			for (int i = 0; i < 2; i++) {
@@ -680,6 +679,9 @@ public class Controller {
 			} else {
 				tfBonusWordLabel.setText("Incorrect!");
 			}
+			if(results[0] && results[1] && results[2]){
+				timer.stop();
+			}
 		} else if (verifyLevel() == "medium") {
 			for (int i = 0; i < 3; i++) {
 				if(results[i]) {
@@ -694,6 +696,9 @@ public class Controller {
 			} else {
 				tfBonusWordLabel.setText("Incorrect!");
 			}
+			if(results[0] && results[1] && results[2]){
+				timer.stop();
+			}
 		} else if (verifyLevel() == "hard") {
 			for (int i = 0; i < 4; i++) {
 				if(results[i]) {
@@ -707,6 +712,9 @@ public class Controller {
 				tfBonusWordLabel.setText("Correct!");
 			} else {
 				tfBonusWordLabel.setText("Incorrect!");
+			}
+			if(results[0] && results[1] && results[2] && results[3]){
+				timer.stop();
 			}
 		}
 	} 
