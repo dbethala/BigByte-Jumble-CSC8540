@@ -696,7 +696,7 @@ public class Controller {
 			} else {
 				tfBonusWordLabel.setText("Incorrect!");
 			}
-			if(results[0] && results[1] && results[2]){
+			if(results[0] && results[1] && results[2] && results[3]){
 				timer.stop();
 			}
 		} else if (verifyLevel() == "hard") {
@@ -713,7 +713,7 @@ public class Controller {
 			} else {
 				tfBonusWordLabel.setText("Incorrect!");
 			}
-			if(results[0] && results[1] && results[2] && results[3]){
+			if(results[0] && results[1] && results[2] && results[3] && results[4]){
 				timer.stop();
 			}
 		}
