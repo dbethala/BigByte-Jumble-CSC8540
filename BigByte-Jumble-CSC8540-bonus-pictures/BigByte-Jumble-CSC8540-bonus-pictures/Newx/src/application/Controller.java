@@ -197,8 +197,9 @@ public class Controller {
 		picture2.setVisible(false);
 		picture3.setVisible(false);
 		
+		if (!timer.stopped())
+		    timer.stop(); 
 		getScore();
-		timer.stop();
 		checkTextFields();
 		
 		
@@ -241,7 +242,7 @@ public class Controller {
 	        roundScore += 20;
 	    
 	    score += roundScore;
-	    Integer scoreConversion = score;
+	    Integer scoreConversion = elapsedTime; //score;
 	    scoreField.setText(scoreConversion.toString());
 	}
 	
