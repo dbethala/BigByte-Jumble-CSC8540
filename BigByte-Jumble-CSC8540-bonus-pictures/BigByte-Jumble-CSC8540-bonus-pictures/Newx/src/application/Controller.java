@@ -71,6 +71,7 @@ public class Controller {
 	@FXML private GridPane gp5; // iteration 4
 	@FXML private GridPane gpBig;
 	@FXML private Text timerField;
+	@FXML private Text scoreField;
 	@FXML private Button end;
 	@FXML private Button button1;
 	@FXML private Button button2;
@@ -83,6 +84,8 @@ public class Controller {
 	private List<GridPane> grid = new ArrayList<GridPane>();
 
 	int Hintcounter; // to keep track of the number of hints
+	
+	JumbleTimer timer;
     
 	public void setMain(Main main){
 	this.main=main; // now the main class is connected with the controller now i can call any method form the main.
@@ -206,7 +209,7 @@ public class Controller {
 		{
 		    tf.setText("");
 		}
-		}
+	}
 		
 		// This section changes the textfield ordering and causes a bug for the background coloring
 		/*for(GridPane x : grid){ //adding all the text field elements of each grid to textfield arraylist so I can clear them at once
@@ -224,7 +227,7 @@ public class Controller {
 	
 
 	public void handleButton(){
-		
+	        timer = new JumbleTimer(timerField);
 		TextField[] tfArray = { tf1, tf2, tf3, tf4, tf5, tf6,
                 tf7, tf8, tf9, tf10, tf11, tf12,
                 tf13, tf14, tf15, tf16, tf17, tf18,
@@ -431,12 +434,13 @@ public class Controller {
 		label3.setVisible(true);
 		label4.setVisible(true);
 		/////////////////// END OF PICTURE HANDLING/////////////////////
-	    difficultyUI();									//set difficulty UI
+	        difficultyUI();									//set difficulty UI
 		settextfield();									//call text field limit method
 	}
 	
 	//Method to set timer. Implements AnimationTimer to spawn new thread to update UI
-	AnimationTimer timer = new AnimationTimer() {
+	
+	    /*AnimationTimer timer = new AnimationTimer() {
 		private long startTime; //Variable to hold system time
 		
 		@Override
@@ -457,7 +461,7 @@ public class Controller {
 			Long difference = (now-startTime)/1000;	//1000 milliseconds in one second
 			timerField.setText(difference.toString() + "s");	//Appends the "s" and prints time in seconds
 		}
-	};
+	};*/
 	
 	public EventHandler<KeyEvent> maxLength(final Integer i){	//event handler, limits text limit in whatever text field passed to it to 1
 		return new EventHandler<KeyEvent>(){
@@ -471,6 +475,7 @@ public class Controller {
 		};
 		
 	}
+	
 	private void difficultyUI(){
 		if(easyRadioButton.isSelected()==true){
 			gpBig.getChildren().clear();						//cleared and re-added children to avoid errors 
