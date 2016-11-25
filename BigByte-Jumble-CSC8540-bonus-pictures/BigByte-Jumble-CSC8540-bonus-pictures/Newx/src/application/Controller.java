@@ -233,12 +233,12 @@ public class Controller {
 	        roundScore += 10;
 	    
 	    // SCORING RULE: 20 bonus points for avg. 1 min. / word solve
-	    //int numberOfWords = results.length;
+	    int numberOfWords = results.length;
 	    int elapsedTime = timer.getElapsedTime();
-	    /*int avgTimeToSolve = numberOfWords / elapsedTime;
+	    int avgTimeToSolve = numberOfWords / elapsedTime;
 	    
 	    if (avgTimeToSolve <= 60)
-	        roundScore += 20;*/
+	        roundScore += 20;
 	    
 	    score += roundScore;
 	    Integer scoreConversion = score;
