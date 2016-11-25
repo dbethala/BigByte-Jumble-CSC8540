@@ -218,27 +218,27 @@ public class Controller {
 	    boolean roundWon = true;
 	    
 	    boolean[] results = solutionChecker(checkTextFields());
-	    for (boolean result : results) {
-	        if (result == true) {
-	            // SCORING RULE: +1 / Correct Word
-	            roundScore += 1;
-	        }
-	        else {
-	            roundWon = false;
-	        }
+	    for (int i = 0; i < results.length; i++) {
+	        if (results[i] == true) {
+                    // SCORING RULE: +1 / Correct Word
+                    roundScore += 1;
+                }
+                else {
+                    roundWon = false;
+                }
 	    }
 	    
 	    // SCORING RULE: +10 for entire round
-	    if (roundWon)
+	    if (roundWon == true)
 	        roundScore += 10;
 	    
 	    // SCORING RULE: 20 bonus points for avg. 1 min. / word solve
-	    int numberOfWords = results.length;
+	    //int numberOfWords = results.length;
 	    int elapsedTime = timer.getElapsedTime();
-	    int avgTimeToSolve = numberOfWords / elapsedTime;
+	    /*int avgTimeToSolve = numberOfWords / elapsedTime;
 	    
 	    if (avgTimeToSolve <= 60)
-	        roundScore += 20;
+	        roundScore += 20;*/
 	    
 	    score += roundScore;
 	    Integer scoreConversion = score;
