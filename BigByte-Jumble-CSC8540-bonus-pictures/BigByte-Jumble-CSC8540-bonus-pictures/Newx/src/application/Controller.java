@@ -84,6 +84,7 @@ public class Controller {
 	private List<GridPane> grid = new ArrayList<GridPane>();
 
 	int Hintcounter; // to keep track of the number of hints
+	int score = 0;
 	
 	JumbleTimer timer;
     
@@ -195,9 +196,10 @@ public class Controller {
 		picture1.setVisible(false);
 		picture2.setVisible(false);
 		picture3.setVisible(false);
+		
+		getScore();
 		timer.stop();
 		checkTextFields();
-		for(GridPane x : grid){ //adding all the text field elements of each grid to textfield arraylist so I can clear them at once
 		
 		
 		TextField[] tfArray = { tf1, tf2, tf3, tf4, tf5, tf6,
@@ -210,19 +212,37 @@ public class Controller {
 		    tf.setText("");
 		}
 	}
-		
-		// This section changes the textfield ordering and causes a bug for the background coloring
-		/*for(GridPane x : grid){ //adding all the text field elements of each grid to textfield arraylist so I can clear them at once
->>>>>>> refs/heads/master
-			for (Node node : x.getChildren()) {
-			    System.out.println("Id: " + node.getId());
-			    if (node instanceof TextField) {
-			        // clear
-			        ((TextField)node).setText("");
-			    }
-			}
-		}*/
-	
+
+	private void getScore() {
+	    int roundScore = 0;
+	    boolean roundWon = true;
+	    
+	    boolean[] results = solutionChecker(checkTextFields());
+	    for (boolean result : results) {
+	        if (result == true) {
+	            // SCORING RULE: +1 / Correct Word
+	            roundScore += 1;
+	        }
+	        else {
+	            roundWon = false;
+	        }
+	    }
+	    
+	    // SCORING RULE: +10 for entire round
+	    if (roundWon)
+	        roundScore += 10;
+	    
+	    // SCORING RULE: 20 bonus points for avg. 1 min. / word solve
+	    int numberOfWords = results.length;
+	    int elapsedTime = timer.getElapsedTime();
+	    int avgTimeToSolve = numberOfWords / elapsedTime;
+	    
+	    if (avgTimeToSolve <= 60)
+	        roundScore += 20;
+	    
+	    score += roundScore;
+	    Integer scoreConversion = score;
+	    scoreField.setText(scoreConversion.toString());
 	}
 	
 
@@ -437,31 +457,6 @@ public class Controller {
 	        difficultyUI();									//set difficulty UI
 		settextfield();									//call text field limit method
 	}
-	
-	//Method to set timer. Implements AnimationTimer to spawn new thread to update UI
-	
-	    /*AnimationTimer timer = new AnimationTimer() {
-		private long startTime; //Variable to hold system time
-		
-		@Override
-		public void start() {
-			startTime = System.currentTimeMillis();	//Sets system time in milliseconds
-				super.start();	//Starts the thread
-		}
-		
-		@Override
-		public void stop(){
-			super.stop();
-		}
-		
-		@Override
-		public void handle(long timestamp) {
-			// TODO Auto-generated method stub
-			long now = System.currentTimeMillis();	//Gets current time after thread has started
-			Long difference = (now-startTime)/1000;	//1000 milliseconds in one second
-			timerField.setText(difference.toString() + "s");	//Appends the "s" and prints time in seconds
-		}
-	};*/
 	
 	public EventHandler<KeyEvent> maxLength(final Integer i){	//event handler, limits text limit in whatever text field passed to it to 1
 		return new EventHandler<KeyEvent>(){

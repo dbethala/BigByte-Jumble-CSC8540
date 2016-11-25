@@ -335,7 +335,7 @@
       <Label id="tfLabel4" fx:id="tfLabel4" layoutX="243.0" layoutY="366.0" text="????" />
       <Label id="tfBonusWordLabel" fx:id="tfBonusWordLabel" layoutX="243.0" layoutY="454.0" text="????" />
       <Label fx:id="scoreLabel" layoutX="394.0" layoutY="14.0" text="Score" />
-      <Text id="timerField" fx:id="timerField1" layoutX="371.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0s" textAlignment="CENTER" wrappingWidth="83.00000953674316" />
+      <Text id="timerField" fx:id="scoreField" layoutX="371.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="83.00000953674316" />
       
    </children>
 </AnchorPane>
