@@ -1,5 +1,6 @@
 package application;
 	
+import java.awt.SplashScreen;
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -28,10 +29,18 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		this.primaryStage=primaryStage;
 		mainWindow();
+		
+		final SplashScreen splash = SplashScreen.getSplashScreen();
+		if (splash != null) {
+	        System.out.println("Closing splashscreen...");
+	        splash.close();
+	    }
+		
 	}
 	
 	public void mainWindow(){
 		primaryStage.setTitle("Jumble Game"); // added a title to the stage.
+		
 		
 	try {
 		//primstage is the window itself but the scene is the content 
@@ -60,6 +69,10 @@ public class Main extends Application {
 //			word.shuffleword(wordsstack_Advanced[i]);
 //			System.out.println(word.shuffleword(wordsstack_Advanced[i]));
 //		}
+	
 		launch(args);
+		
 	}
+	
 }
+

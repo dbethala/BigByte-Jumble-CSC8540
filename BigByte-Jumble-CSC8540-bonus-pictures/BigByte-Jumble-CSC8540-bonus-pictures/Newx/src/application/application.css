@@ -3,7 +3,7 @@
   -fx-control-inner-background: orange;
 }
 .anchor {
-  -fx-background-image:url('file:/C:/Users/n1000/workspace/Newx/background1.jpg');
+  -fx-background-image:url('file:/Users/connorbird/Documents/workspace/BigByte-Jumble-CSC8540/BigByte-Jumble-CSC8540-bonus-pictures/BigByte-Jumble-CSC8540-bonus-pictures/Newx/background1.jpg');
 }
 
 .initial {
@@ -25,9 +25,9 @@
 }
 
 .label {
-    -fx-font-size: 11pt;
-    -fx-font-weight: bold;
+    -fx-font-size: 12pt;
     -fx-font-family: "Segoe UI Semibold";
     -fx-text-fill: black;
-    -fx-opacity: 0.6;
+    -fx-font-weight: bold;
+    -fx-opacity: 1.0;
 }
