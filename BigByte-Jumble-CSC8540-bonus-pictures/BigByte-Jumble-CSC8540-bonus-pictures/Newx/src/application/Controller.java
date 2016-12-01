@@ -197,8 +197,9 @@ public class Controller {
 		picture2.setVisible(false);
 		picture3.setVisible(false);
 		
+		if (!timer.stopped())
+		    timer.stop(); 
 		getScore();
-		timer.stop();
 		checkTextFields();
 		
 		
@@ -213,37 +214,7 @@ public class Controller {
 		}
 	}
 
-	private void getScore() {
-	    int roundScore = 0;
-	    boolean roundWon = true;
-	    
-	    boolean[] results = solutionChecker(checkTextFields());
-	    for (boolean result : results) {
-	        if (result == true) {
-	            // SCORING RULE: +1 / Correct Word
-	            roundScore += 1;
-	        }
-	        else {
-	            roundWon = false;
-	        }
-	    }
-	    
-	    // SCORING RULE: +10 for entire round
-	    if (roundWon)
-	        roundScore += 10;
-	    
-	    // SCORING RULE: 20 bonus points for avg. 1 min. / word solve
-	    int numberOfWords = results.length;
-	    int elapsedTime = timer.getElapsedTime();
-	    int avgTimeToSolve = numberOfWords / elapsedTime;
-	    
-	    if (avgTimeToSolve <= 60)
-	        roundScore += 20;
-	    
-	    score += roundScore;
-	    Integer scoreConversion = score;
-	    scoreField.setText(scoreConversion.toString());
-	}
+	
 	
 
 	public void handleButton(){
@@ -717,7 +688,48 @@ public class Controller {
 				timer.stop();
 			}
 		}
-	} 
+	}
+	
+	private void getScore() {
+            int roundScore = 0;
+            boolean roundWon = true;
+            int upperBound = 0;
+            
+            boolean[] results = solutionChecker(checkTextFields());
+            
+            if (verifyLevel() == "easy")
+                upperBound = 2;
+            else if (verifyLevel() == "medium")
+                upperBound = 3;
+            else if (verifyLevel() == "hard")
+                upperBound = 4;
+            
+            for (int i = 0; i < upperBound; i++) {
+                if (results[i] == true) {
+                    // SCORING RULE: +1 / Correct Word
+                    roundScore += 1;
+                }
+                else {
+                    roundWon = false;
+                }
+            }
+            
+            // SCORING RULE: +10 for entire round
+            if (roundWon == true)
+                roundScore += 10;
+            
+            // SCORING RULE: 20 bonus points for avg. 1 min. / word solve
+            int numberOfWords = upperBound + 1;
+            int elapsedTime = timer.getElapsedTime();
+            int avgTimeToSolve = elapsedTime / numberOfWords;
+            
+            if (avgTimeToSolve <= 60)
+                roundScore += 20;
+            
+            score += roundScore;
+            Integer scoreConversion = numberOfWords;
+            scoreField.setText(scoreConversion.toString());
+        }
 }
 
 

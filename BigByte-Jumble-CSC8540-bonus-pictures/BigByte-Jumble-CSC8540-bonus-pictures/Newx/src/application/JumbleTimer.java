@@ -6,7 +6,10 @@ import javafx.scene.text.Text;
 
 public class JumbleTimer extends AnimationTimer {
     private long startTime; //Variable to hold system time
+    private int elapsedTime;
+    private boolean stoppedFlag;
     @FXML private Text timerField;
+    
 
     public JumbleTimer(Text timerField2) {
         timerField = timerField2;
@@ -16,11 +19,15 @@ public class JumbleTimer extends AnimationTimer {
     public void start() {
             startTime = System.currentTimeMillis(); //Sets system time in milliseconds
             super.start();  //Starts the thread
+            stoppedFlag = false;
     }
     
     @Override
     public void stop(){
             super.stop();
+            stoppedFlag = true;
+            long now = System.currentTimeMillis();
+            elapsedTime = (int)(now-startTime)/1000;
     }
     
     @Override
@@ -31,8 +38,11 @@ public class JumbleTimer extends AnimationTimer {
     }
     
     public int getElapsedTime() {
-        long now = System.currentTimeMillis();
-        long elapsedTime = (now-startTime)/1000;
-        return (int)elapsedTime;
+        
+        return elapsedTime;
+    }
+    
+    public boolean stopped() {
+        return stoppedFlag;
     }
 }
