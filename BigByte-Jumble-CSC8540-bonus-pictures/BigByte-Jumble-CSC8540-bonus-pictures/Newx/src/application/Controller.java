@@ -55,6 +55,7 @@ public class Controller {
 	@FXML private Label label3;
 	@FXML private Label label4;
 	@FXML private Label label5;
+	@FXML private Label bonushint;
 	@FXML private Label hintnum;
 	@FXML private RadioButton easyRadioButton; //iteration 4
 	@FXML private RadioButton mediumRadioButton; //iteration 4
@@ -82,6 +83,7 @@ public class Controller {
 	@FXML private Label difflabel, labelw1, labelw2, labelw3,labelw4, labelw5;
 	@FXML private Label tfLabel1, tfLabel2, tfLabel3, tfLabel4, tfBonusWordLabel;
 	private List<GridPane> grid = new ArrayList<GridPane>();
+	
 
 	int Hintcounter; // to keep track of the number of hints
 	int score = 0;
@@ -104,12 +106,14 @@ public class Controller {
 	label4.getStyleClass().add("custom1");
 	label5.getStyleClass().add("custom1");
 	labelw1.getStyleClass().add("label");
+	bonushint.getStyleClass().add("label");
 	button2.getStyleClass().add("button");
 	solveButton.getStyleClass().add("button");
 	solveButton.setVisible(false);
 	picture1.setVisible(false);
 	picture2.setVisible(false);
 	picture3.setVisible(false);
+	bonushint.setVisible(false);
 	button2.setDisable(true);  // disabling the click on hint when you load the game 
 	end.setDisable(true); // disabling the click on endgame when you load the game 
 	
@@ -193,13 +197,13 @@ public class Controller {
 		label3.setVisible(false);
 		label4.setVisible(false);
 		label5.setVisible(false);
+		bonushint.setVisible(false);
 		picture1.setVisible(false);
 		picture2.setVisible(false);
 		picture3.setVisible(false);
-		
+		scoreField.setText("0");
 		if (!timer.stopped())
 		    timer.stop(); 
-		getScore();
 		checkTextFields();
 		
 		
@@ -230,6 +234,7 @@ public class Controller {
 		label3.setVisible(true);
 		label4.setVisible(true);
 		label5.setVisible(true);
+		bonushint.setVisible(true);
 		easyRadioButton.setDisable(true);
 		mediumRadioButton.setDisable(true);
 		hardRadioButton.setDisable(true);
@@ -237,7 +242,7 @@ public class Controller {
 		
 		Label[] tfArr = {tfLabel1, tfLabel2, tfLabel3, tfLabel4, tfBonusWordLabel};
 		for (Label tfLabel : tfArr) {
-			tfLabel.setText("?????");
+			tfLabel.setText("");
 		}
 		
 		timer.start();
@@ -400,6 +405,7 @@ public class Controller {
 			picture1.setVisible(true);
 			picture2.setVisible(false);
 			picture3.setVisible(false);
+		
 			
 		}
 		
@@ -418,6 +424,7 @@ public class Controller {
 			picture3.setVisible(true);
 			picture2.setVisible(true);
 			picture3.setVisible(false);
+			
 		}
 		
 		label1.setVisible(true);
@@ -453,7 +460,9 @@ public class Controller {
 			gpBig.getChildren().add(labelw5);
 			gpBig.getChildren().add(label1);
 			gpBig.getChildren().add(label2);
-			gpBig.getChildren().add(label5);	
+			gpBig.getChildren().add(label5);
+			
+			
 		}
 		
 		if(mediumRadioButton.isSelected()==true){
@@ -652,6 +661,7 @@ public class Controller {
 			}
 			if(results[0] && results[1] && results[2]){
 				timer.stop();
+				getScore();
 			}
 		} else if (verifyLevel() == "medium") {
 			for (int i = 0; i < 3; i++) {
@@ -669,6 +679,7 @@ public class Controller {
 			}
 			if(results[0] && results[1] && results[2] && results[3]){
 				timer.stop();
+				getScore();
 			}
 		} else if (verifyLevel() == "hard") {
 			for (int i = 0; i < 4; i++) {
@@ -686,50 +697,61 @@ public class Controller {
 			}
 			if(results[0] && results[1] && results[2] && results[3] && results[4]){
 				timer.stop();
+				getScore();
 			}
 		}
+		
 	}
 	
 	private void getScore() {
-            int roundScore = 0;
+           int roundScore=0;
             boolean roundWon = true;
             int upperBound = 0;
+           
+
             
             boolean[] results = solutionChecker(checkTextFields());
             
             if (verifyLevel() == "easy")
-                upperBound = 2;
-            else if (verifyLevel() == "medium")
                 upperBound = 3;
-            else if (verifyLevel() == "hard")
+            else if (verifyLevel() == "medium")
                 upperBound = 4;
+            else if (verifyLevel() == "hard")
+                upperBound = 5;
+         
             
-            for (int i = 0; i < upperBound; i++) {
-                if (results[i] == true) {
-                    // SCORING RULE: +1 / Correct Word
-                    roundScore += 1;
-                }
-                else {
-                    roundWon = false;
-                }
-            }
-            
+        
+        	   for (int i = 0; i < upperBound; i++) {
+                   if (results[i] == true) {
+                       // SCORING RULE: +1 / Correct Word
+                       roundScore+=1;
+                   }
+                   else {
+                       roundWon = false;
+                   }
+               }
+        	   
+           
+           
+           
             // SCORING RULE: +10 for entire round
-            if (roundWon == true)
+            if (roundWon == true){
                 roundScore += 10;
             
             // SCORING RULE: 20 bonus points for avg. 1 min. / word solve
-            int numberOfWords = upperBound + 1;
+                int numberOfWords = upperBound;
             int elapsedTime = timer.getElapsedTime();
             int avgTimeToSolve = elapsedTime / numberOfWords;
             
             if (avgTimeToSolve <= 60)
                 roundScore += 20;
-            
+            }
             score += roundScore;
-            Integer scoreConversion = numberOfWords;
+            Integer scoreConversion = roundScore;
             scoreField.setText(scoreConversion.toString());
         }
+	
+
 }
 
 
